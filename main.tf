@@ -1,13 +1,12 @@
 variable "list_of_rules" {
-  default = ["default_rules"]
+  default = null
   type = "list"
 }
 
-variable "list_of_lambdas" {
-  default = ["default_lamb"]
-  type = "list"
-}
+data "null_data_source" "my_rules" {
+  count = length(var.list_of_rules)
 
-output "rules" {
-  value = var.list_of_rules
+  inputs = {
+    rule = var.list_of_rules[count.index]
+  }
 }
